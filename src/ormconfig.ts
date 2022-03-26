@@ -1,10 +1,10 @@
 import { PostgresConnectionOptions } from 'typeorm/driver/postgres/PostgresConnectionOptions';
 
 // When run migration, dotenv do not load, so must load again
-import * as dotenv from 'dotenv';
-dotenv.config({
-  path: '.env.development',
-});
+// import * as dotenv from 'dotenv';
+// dotenv.config({
+//   path: '.env.development',
+// });
 
 const config: PostgresConnectionOptions = {
   type: 'postgres',

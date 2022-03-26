@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { MessagesRepository } from './messages.repository';
-import { MessageEntity } from '../serializers/message.serializer';
-import { Message } from '../entities/message.entity';
+import { MessageEntity } from './serializers/message.serializer';
+import { Message } from './entities/message.entity';
 
 @Injectable()
 export class MessagesService {

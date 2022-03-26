@@ -1,10 +1,10 @@
 import { EntityRepository } from 'typeorm';
-import { Message } from '../entities/message.entity';
+import { Message } from './entities/message.entity';
 import { ModelRepository } from '../model.repository';
 import {
   allMessageGroupsForSerializing,
   MessageEntity,
-} from '../serializers/message.serializer';
+} from './serializers/message.serializer';
 import { plainToClass, classToPlain } from 'class-transformer';
 
 @EntityRepository(Message)

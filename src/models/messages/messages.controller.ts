@@ -15,9 +15,9 @@ import {
 import {
   extendedMessageGroupsForSerializing,
   MessageEntity,
-} from '../serializers/message.serializer';
+} from './serializers/message.serializer';
 import { MessagesService } from './messages.service';
-import { Message } from '../entities/message.entity';
+import { Message } from './entities/message.entity';
 
 @Controller('messages')
 @SerializeOptions({
