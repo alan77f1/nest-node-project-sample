@@ -6,34 +6,32 @@ import {
   Delete,
   Param,
   Controller,
-  UseInterceptors,
-  SerializeOptions,
-  ClassSerializerInterceptor,
+  Query,
   HttpException,
   HttpStatus,
+  UseGuards,
 } from '@nestjs/common';
-import {
-  extendedMessageGroupsForSerializing,
-  MessageEntity,
-} from './serializers/message.serializer';
+import { MessageEntity } from './serializers/message.serializer';
 import { MessagesService } from './messages.service';
 import { Message } from './entities/message.entity';
+import { AuthenticationGuard } from '../../auth/guards/auth.guard';
+import { MessageListParam } from './interfaces/message.interface';
 
+@UseGuards(AuthenticationGuard)
 @Controller('messages')
-@SerializeOptions({
-  groups: extendedMessageGroupsForSerializing,
-})
 export class MessagesController {
   constructor(private readonly messageService: MessagesService) {}
 
   @Get('/')
-  @UseInterceptors(ClassSerializerInterceptor)
-  async index() {
-    return this.messageService.findAll();
+  async index(@Query() query: MessageListParam) {
+    return this.messageService.findAllPaginate(
+      query.conversation_id,
+      query.take,
+      query.page,
+    );
   }
 
   @Get('/:id')
-  @UseInterceptors(ClassSerializerInterceptor)
   async getById(@Param() params): Promise<MessageEntity> {
     const message = await this.messageService.findById(params.id);
     this.throwMessageNotFound(message);
@@ -41,13 +39,11 @@ export class MessagesController {
   }
 
   @Post('/')
-  @UseInterceptors(ClassSerializerInterceptor)
   async create(@Body() inputs: Message): Promise<MessageEntity> {
     return await this.messageService.create(inputs);
   }
 
   @Put('/:id')
-  @UseInterceptors(ClassSerializerInterceptor)
   async update(
     @Param() params,
     @Body() inputs: Message,
@@ -58,7 +54,7 @@ export class MessagesController {
   }
 
   @Delete('/:id')
-  async delete(@Param() params): Promise<Boolean> {
+  async delete(@Param() params): Promise<boolean> {
     const message = await this.messageService.findById(parseInt(params.id, 0));
     this.throwMessageNotFound(message);
     return await this.messageService.deleteById(params.id);

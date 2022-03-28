@@ -34,12 +34,12 @@ export class UsersService {
     );
   }
 
-  // async findUserAndMessageReadById(
-  //   id: number,
-  //   status: number | null,
-  // ): Promise<UserEntity> {
-  //   return await this.usersRepository.findUserAndMessageReadById(id, status);
-  // }
+  async findUserAndMessageReadById(
+    id: number,
+    status: number | null,
+  ): Promise<UserEntity> {
+    return await this.usersRepository.findUserAndMessageReadById(id, status);
+  }
 
   async update(user: UserEntity, inputs: User): Promise<UserEntity> {
     return await this.usersRepository.updateEntity(user, inputs);
@@ -57,33 +57,33 @@ export class UsersService {
     return await this.usersRepository.getUserByEmail(email);
   }
 
-  // async findAllConversations(
-  //   user_id: number | string,
-  // ): Promise<User | UserEntity | null> {
-  //   const data = await this.usersRepository.findAllConversation(user_id);
-  //   if (!data) {
-  //     return null;
-  //   }
+  async findAllConversations(
+    user_id: number | string,
+  ): Promise<User | UserEntity | null> {
+    const data = await this.usersRepository.findAllConversation(user_id);
+    if (!data) {
+      return null;
+    }
 
-  //   data.conversations = data.conversations
-  //     ? data.conversations.map((conversation) => {
-  //         conversation.users = conversation.users
-  //           ? conversation.users.map((user) => {
-  //               return {
-  //                 ...user,
-  //                 last_message_id:
-  //                   user?.last_message_id?.last_message_id || null,
-  //               };
-  //             })
-  //           : [];
+    data.conversations = data.conversations
+      ? data.conversations.map((conversation) => {
+          conversation.users = conversation.users
+            ? conversation.users.map((user) => {
+                return {
+                  ...user,
+                  last_message_id:
+                    user?.last_message_id?.last_message_id || null,
+                };
+              })
+            : [];
 
-  //         conversation.messages = conversation.messages
-  //           ? [conversation.messages]
-  //           : [];
-  //         return conversation;
-  //       })
-  //     : [];
+          conversation.messages = conversation.messages
+            ? [conversation.messages]
+            : [];
+          return conversation;
+        })
+      : [];
 
-  //   return data;
-  // }
+    return data;
+  }
 }

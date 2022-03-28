@@ -36,16 +36,16 @@ export class UsersController {
     return user;
   }
 
-  // @Get('messages/:id/:status')
-  // @UseInterceptors(ClassSerializerInterceptor)
-  // async getByIdAndMessageStatus(@Param() params): Promise<UserEntity> {
-  //   const user = await this.usersService.findUserAndMessageReadById(
-  //     params.id,
-  //     params.status,
-  //   );
-  //   this.throwUserNotFound(user);
-  //   return user;
-  // }
+  @Get('messages/:id/:status')
+  @UseInterceptors(ClassSerializerInterceptor)
+  async getByIdAndMessageStatus(@Param() params): Promise<UserEntity> {
+    const user = await this.usersService.findUserAndMessageReadById(
+      params.id,
+      params.status,
+    );
+    this.throwUserNotFound(user);
+    return user;
+  }
 
   @Get('conversation/:id')
   async userConversation(@Param() params): Promise<UserEntity> {
@@ -58,12 +58,12 @@ export class UsersController {
     return user;
   }
 
-  // @Get('conversations/get')
-  // async getAllConversation(@Request() request): Promise<User | UserEntity> {
-  //   const user = await this.usersService.findAllConversations(request.user.id);
-  //   this.throwUserNotFound(user);
-  //   return user;
-  // }
+  @Get('conversations/get')
+  async getAllConversation(@Request() request): Promise<User | UserEntity> {
+    const user = await this.usersService.findAllConversations(request.user.id);
+    this.throwUserNotFound(user);
+    return user;
+  }
 
   @Post('/')
   async create(@Body() inputs: CreateUserDto): Promise<UserEntity> {
