@@ -24,11 +24,7 @@ export class MessagesController {
 
   @Get('/')
   async index(@Query() query: MessageListParam) {
-    return this.messageService.findAllPaginate(
-      query.conversation_id,
-      query.take,
-      query.page,
-    );
+    return this.messageService.findAll();
   }
 
   @Get('/:id')
